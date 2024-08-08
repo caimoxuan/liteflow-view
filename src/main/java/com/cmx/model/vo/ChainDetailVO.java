@@ -1,5 +1,7 @@
-package com.cmx.model;
+package com.cmx.model.vo;
 
+import com.cmx.model.CmpProperty;
+import com.cmx.model.Properties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CmpProperty {
+public class ChainDetailVO {
 
     /**
      * id
@@ -34,9 +36,13 @@ public class CmpProperty {
     private CmpProperty condition;
 
     /**
+     * 扩展点数量
+     */
+    private Integer extensionCount;
+
+    /**
      * 子集
      */
-    private List<CmpProperty> children;
-
+    private List<ChainDetailVO> children;
 
 }
