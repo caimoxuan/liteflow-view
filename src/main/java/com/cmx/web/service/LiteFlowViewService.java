@@ -2,6 +2,7 @@ package com.cmx.web.service;
 
 import com.cmx.extension.annotation.ExtensionCmp;
 import com.cmx.extension.annotation.ExtensionPoint;
+import com.cmx.extension.loader.IExtensionRemoteLoader;
 import com.cmx.extension.model.AbstractExtensionNode;
 import com.cmx.extension.model.ExtensionData;
 import com.cmx.extension.model.ExtensionParam;
@@ -14,6 +15,7 @@ import com.yomahub.liteflow.flow.element.Chain;
 import com.yomahub.liteflow.flow.element.Condition;
 import com.yomahub.liteflow.flow.element.Node;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,8 +27,13 @@ import java.util.stream.Collectors;
 @Service
 public class LiteFlowViewService {
 
+
+    @Autowired(required = false)
+    private IExtensionRemoteLoader remoteLoader;
+
     /**
      * 获取当前项目所有的组件
+     *
      * @return cmp list
      */
     public List<CmpInfoVO> getCmpList() {
@@ -47,6 +54,7 @@ public class LiteFlowViewService {
 
     /**
      * 获取当前项目所有流程
+     *
      * @return chain list
      */
     public List<ChainInfoVO> getChainList() {
@@ -67,6 +75,7 @@ public class LiteFlowViewService {
 
     /**
      * 获取流程详细信息
+     *
      * @param chainId chainId
      * @return vo
      */
@@ -85,6 +94,7 @@ public class LiteFlowViewService {
 
     /**
      * 获取组件节点信息
+     *
      * @param nodeId 节点id
      * @return node info
      */
@@ -113,11 +123,36 @@ public class LiteFlowViewService {
     }
 
     /**
+     * 获取远程扩展点信息
+     *
+     * @param bizCode 业务编码
+     * @param extCode 扩展点编码
+     * @return 扩展点信息
+     */
+    public ExtensionDetailVO getExtensionDetail(String bizCode, String extCode) {
+        ExtensionDetailVO detailVO = new ExtensionDetailVO();
+        detailVO.setBizCode(bizCode);
+        if (remoteLoader == null) {
+            return detailVO;
+        }
+        String script = remoteLoader.loadRemoteScript(bizCode, extCode);
+        detailVO.setScriptText(script);
+        ExtensionInfoVO extensionInfoVO = new ExtensionInfoVO();
+        extensionInfoVO.setExtCode(extCode);
+        detailVO.setExtensionInfo(extensionInfoVO);
+        return detailVO;
+    }
+
+    /**
      * to detail
+     *
      * @param cmpProperty property
      * @return v
      */
     private ChainDetailVO toChainDetail(CmpProperty cmpProperty) {
+        if (cmpProperty == null) {
+            return null;
+        }
         int extensionCount = 0;
         if (NodeTypeEnum.COMMON.getMappingClazz().getSimpleName().equals(cmpProperty.getType())) {
             // find extension count
@@ -139,7 +174,6 @@ public class LiteFlowViewService {
                 .children(cmpProperties.stream().map(this::toChainDetail).collect(Collectors.toList()))
                 .build();
     }
-
 
 
 }

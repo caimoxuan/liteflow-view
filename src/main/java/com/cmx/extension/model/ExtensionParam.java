@@ -6,8 +6,8 @@ import lombok.Data;
 public class ExtensionParam {
 
     /**
-     * 加载器注册key 用于获取指定远程加载器
+     * 业务编码
      */
-    private String loadKey;
+    private String bizCode;
 
 }

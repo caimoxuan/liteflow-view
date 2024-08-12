@@ -22,9 +22,9 @@ public class JavaExtensionNodeRunner implements IExtensionNodeRunner {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <D extends ExtensionData<?>, P extends ExtensionParam> D run(AbstractExtensionNode<D, P> node) {
+    public <D extends ExtensionData<?>, P extends ExtensionParam> D run(AbstractExtensionNode<D, P> node, ExtensionParam param) {
         String fileName = node.getScriptFileName();
-        String cacheKey = node.getParam().getLoadKey() + "_" + fileName;
+        String cacheKey = param.getBizCode() + "_" + fileName;
         if (StringUtils.isNotBlank(node.getScriptText())) {
             try {
                 if (instanceCache.get(cacheKey) != null) {

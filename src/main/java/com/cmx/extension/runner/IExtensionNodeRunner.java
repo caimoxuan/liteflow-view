@@ -1,6 +1,7 @@
 package com.cmx.extension.runner;
 
 
+import com.cmx.extension.Extensions;
 import com.cmx.extension.model.AbstractExtensionNode;
 import com.cmx.extension.model.ExtensionData;
 import com.cmx.extension.model.ExtensionParam;
@@ -14,7 +15,7 @@ public interface IExtensionNodeRunner {
      * @param <D> res
      * @param <P> req
      */
-    <D extends ExtensionData<?>, P extends ExtensionParam> D run(AbstractExtensionNode<D, P> node);
+    <D extends ExtensionData<?>, P extends ExtensionParam> D run(AbstractExtensionNode<D, P> node, ExtensionParam param);
 
 
     /**

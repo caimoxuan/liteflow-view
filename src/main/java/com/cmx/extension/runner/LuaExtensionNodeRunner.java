@@ -25,10 +25,10 @@ public class LuaExtensionNodeRunner implements IExtensionNodeRunner {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <D extends ExtensionData<?>, P extends ExtensionParam> D run(AbstractExtensionNode<D, P> node) {
+    public <D extends ExtensionData<?>, P extends ExtensionParam> D run(AbstractExtensionNode<D, P> node, ExtensionParam param) {
         Globals luaGlobals = LuaGlobalRegister.getLuaGlobals();
         LuaValue load = luaGlobals.load(node.getScriptText());
-        luaGlobals.set(PARAMETER_NAME, CoerceJavaToLua.coerce(node.getParam()));
+        luaGlobals.set(PARAMETER_NAME, CoerceJavaToLua.coerce(param));
         LuaValue res = load.call();
         ExtensionData<Object> extensionData = new ExtensionData<>();
         LuaValue code = res.get(CODE_NAME);

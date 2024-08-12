@@ -39,7 +39,6 @@ public class ExpressParserFactory {
         if (parser.parserType() == null) {
             return;
         }
-        Assert.notNull(parser, "ExpressParser parser must not be null");
         PARSER_MAP.put(parser.parserType().getType(), parser);
         log.info("ExpressParser[{}] has been found", parser.parserType());
     }

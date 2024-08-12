@@ -1,7 +1,6 @@
 package com.cmx.extension.loader;
 
 import com.cmx.extension.model.AbstractExtensionNode;
-import com.cmx.extension.model.DefaultExtensionNode;
 import com.cmx.extension.model.ExtensionData;
 import com.cmx.extension.model.ExtensionParam;
 import org.apache.commons.lang.StringUtils;
@@ -37,24 +36,24 @@ public class ExtensionLoader {
     public static Map<String, Object> extensionNodeLocalCache = new HashMap<>();
 
     @SuppressWarnings("unchecked")
-    public static <T> AbstractExtensionNode<ExtensionData<T>, ExtensionParam> loaderRemoteExtension(String loadKey, String extCode, ExtensionParam param, Class<? extends AbstractExtensionNode<ExtensionData<T>, ExtensionParam>> clazz) {
+    public static <T> AbstractExtensionNode<ExtensionData<T>, ExtensionParam> loaderRemoteExtension(String loadKey, String extCode, Class<? extends AbstractExtensionNode<ExtensionData<T>, ExtensionParam>> clazz) {
         String extensionCode = loadKey + KEY_SPLIT + extCode;
         AbstractExtensionNode<ExtensionData<T>, ExtensionParam> extensionNode = (AbstractExtensionNode<ExtensionData<T>, ExtensionParam>) extensionNodeLocalCache.get(extensionCode);
         if (extensionNode != null) {
-            return DefaultExtensionNode.newDefault(extensionNode, param);
+            return extensionNode;
         }
-        AbstractExtensionRemoteLoader loader = ExtensionLoaderFactory.getLoader(param.getLoadKey());
-        AbstractExtensionNode<ExtensionData<T>, ExtensionParam> loaderNode = loader.loadRemoteExtension(loadKey, extCode, param, clazz);
+        AbstractExtensionRemoteLoader loader = ExtensionLoaderFactory.getLoader();
+        AbstractExtensionNode<ExtensionData<T>, ExtensionParam> loaderNode = loader.loadRemoteExtension(loadKey, extCode, clazz);
         extensionNodeLocalCache.put(extensionCode, loaderNode);
-        return DefaultExtensionNode.newDefault(loaderNode, param);
+        return loaderNode;
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> AbstractExtensionNode<ExtensionData<T>, ExtensionParam> loaderLocalExtension(String loadKey, String extCode, ExtensionParam param, Class<? extends AbstractExtensionNode<ExtensionData<T>, ExtensionParam>> clazz) {
+    public static <T> AbstractExtensionNode<ExtensionData<T>, ExtensionParam> loaderLocalExtension(String loadKey, String extCode, Class<? extends AbstractExtensionNode<ExtensionData<T>, ExtensionParam>> clazz) {
         String extensionCode = loadKey + KEY_SPLIT + extCode;
         AbstractExtensionNode<ExtensionData<T>, ExtensionParam> extensionNode = (AbstractExtensionNode<ExtensionData<T>, ExtensionParam>) extensionNodeLocalCache.get(extensionCode);
         if (extensionNode != null) {
-            return DefaultExtensionNode.newDefault(extensionNode, param);
+            return extensionNode;
         }
         URL url = ResourceLoader.class.getResource(LOCAL_RESOURCE_DIR + loadKey);
         if (url != null) {
@@ -83,7 +82,7 @@ public class ExtensionLoader {
                 extensionNode.setScriptFileName(fileName);
                 extensionNode.setScriptText(fileContext);
                 extensionNodeLocalCache.put(extensionCode, extensionNode);
-                return DefaultExtensionNode.newDefault(extensionNode, param);
+                return extensionNode;
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -2,6 +2,7 @@ package com.cmx.extension;
 
 import com.cmx.extension.loader.ExtensionLoader;
 import com.cmx.extension.model.AbstractExtensionNode;
+import com.cmx.extension.model.DefaultExtensionNode;
 import com.cmx.extension.model.ExtensionData;
 import com.cmx.extension.model.ExtensionParam;
 import com.cmx.extension.runner.IExtensionNodeRunner;
@@ -34,11 +35,11 @@ public class Extensions {
      * @param <T> 结果类型
      */
     public static <T> T execute(String loadKey, String extCode, ExtensionParam param, Class<? extends AbstractExtensionNode<ExtensionData<T>, ExtensionParam>> clazz) {
-        AbstractExtensionNode<ExtensionData<T>, ExtensionParam> extNode = ExtensionLoader.loaderLocalExtension(loadKey, extCode, param, clazz);
+        AbstractExtensionNode<ExtensionData<T>, ExtensionParam> extNode = ExtensionLoader.loaderLocalExtension(loadKey, extCode, clazz);
         IExtensionNodeRunner extensionNodeRunner = runners.stream().filter(r -> r.isSupport(extNode.getScriptFileName(), extNode.getScriptText()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("file : " + extNode.getScriptFileName() + " type not support"));
-        ExtensionData<T> extensionData = extensionNodeRunner.run(extNode);
+        ExtensionData<T> extensionData = extensionNodeRunner.run(extNode, param);
         if (extensionData.getCode() != 0) {
             throw new RuntimeException("run extension fail case : " + extensionData.getData());
         }

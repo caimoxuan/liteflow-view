@@ -1,9 +1,6 @@
 package com.cmx.web;
 
-import com.cmx.model.vo.ChainDetailVO;
-import com.cmx.model.vo.ChainInfoVO;
-import com.cmx.model.vo.CmpInfoVO;
-import com.cmx.model.vo.NodeDetailVO;
+import com.cmx.model.vo.*;
 import com.cmx.web.service.LiteFlowViewService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +36,11 @@ public class LiteFlow2ControllerWebMvc {
     public NodeDetailVO getNodeDetail(@RequestParam String nodeId) {
         return liteFlowViewService.getNodeDetail(nodeId);
     }
+
+    @GetMapping("/extensionDetail")
+    public ExtensionDetailVO getExtensionDetail(@RequestParam String bizCode, @RequestParam String extCode) {
+        return liteFlowViewService.getExtensionDetail(bizCode, extCode);
+    }
+
 
 }
