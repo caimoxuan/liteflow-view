@@ -25,5 +25,9 @@ public abstract class AbstractExtensionNode<D extends ExtensionData<?>, P extend
      */
     private String scriptFileName;
 
+    /**
+     * 脚本类型 （java / lua / js / ...）
+     */
+    private String scriptType;
 
 }

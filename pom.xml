@@ -4,10 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
-
     <groupId>com.cmx</groupId>
     <artifactId>liteflow-view</artifactId>
-    <version>1.0.35</version>
+    <version>1.0.37</version>
     <name>liteflow-view</name>
 
     <properties>
@@ -64,6 +63,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${project.lombok}</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

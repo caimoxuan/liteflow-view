@@ -1,5 +1,6 @@
 package com.cmx.web.service;
 
+import com.cmx.extension.Extensions;
 import com.cmx.extension.annotation.ExtensionCmp;
 import com.cmx.extension.annotation.ExtensionPoint;
 import com.cmx.extension.loader.IExtensionRemoteLoader;
@@ -7,6 +8,7 @@ import com.cmx.extension.model.AbstractExtensionNode;
 import com.cmx.extension.model.ExtensionData;
 import com.cmx.extension.model.ExtensionParam;
 import com.cmx.model.CmpProperty;
+import com.cmx.model.ScriptDetail;
 import com.cmx.model.vo.*;
 import com.cmx.parser.generator.ExpressGenerator;
 import com.yomahub.liteflow.enums.NodeTypeEnum;
@@ -135,12 +137,45 @@ public class LiteFlowViewService {
         if (remoteLoader == null) {
             return detailVO;
         }
-        String script = remoteLoader.loadRemoteScript(bizCode, extCode);
-        detailVO.setScriptText(script);
+        ScriptDetail scriptDetail = remoteLoader.loadRemoteScript(bizCode, extCode);
+        if (scriptDetail != null) {
+            detailVO.setScriptText(scriptDetail.getScriptText());
+            detailVO.setScriptType(scriptDetail.getScriptType());
+        }
         ExtensionInfoVO extensionInfoVO = new ExtensionInfoVO();
         extensionInfoVO.setExtCode(extCode);
         detailVO.setExtensionInfo(extensionInfoVO);
         return detailVO;
+    }
+
+    /**
+     * 保存扩展点
+     * @param bizCode 业务code
+     * @param extCode 扩展点code
+     * @param scriptDetail 脚本信息
+     */
+    public void createExtensionScript(String bizCode, String extCode, ScriptDetail scriptDetail) {
+        if (remoteLoader == null) {
+            throw new RuntimeException("not implement method com.cmx.extension.loader.IExtensionRemoteLoader.saveRemoteScript!");
+        }
+        remoteLoader.saveRemoteScript(bizCode, extCode, scriptDetail);
+    }
+
+    /**
+     * 更新扩展点脚本
+     * @param bizCode 业务code
+     * @param extCode 扩展点code
+     * @param scriptDetail 脚本信息
+     */
+    public void updateExtensionScript(String bizCode, String extCode, ScriptDetail scriptDetail) {
+        if (remoteLoader == null) {
+            throw new RuntimeException("not implement method com.cmx.extension.loader.IExtensionRemoteLoader.updateRemoteScript!");
+        }
+        remoteLoader.updateRemoteScript(bizCode, extCode, scriptDetail);
+    }
+
+    public Boolean checkScript(String bizCode, String extCode, ScriptDetail scriptDetail) {
+        Extensions.clearExtensionCache(bizCode, extCode);
     }
 
     /**

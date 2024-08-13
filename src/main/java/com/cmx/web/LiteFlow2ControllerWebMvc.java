@@ -42,5 +42,21 @@ public class LiteFlow2ControllerWebMvc {
         return liteFlowViewService.getExtensionDetail(bizCode, extCode);
     }
 
+    @PutMapping("/extensionScript")
+    public String updateExtensionScript(@RequestBody ScriptDataVO scriptData) {
+        liteFlowViewService.updateExtensionScript(scriptData.getBizCode(),
+                scriptData.getExtCode(),
+                scriptData.getScriptDetail());
+        return "success";
+    }
+
+    @PostMapping("/extensionScript")
+    public String createExtensionScript(@RequestBody ScriptDataVO scriptData) {
+        liteFlowViewService.createExtensionScript(scriptData.getBizCode(),
+                scriptData.getExtCode(),
+                scriptData.getScriptDetail());
+        return "success";
+    }
+
 
 }

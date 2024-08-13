@@ -24,7 +24,7 @@ public class JavaExtensionNodeRunner implements IExtensionNodeRunner {
     @SuppressWarnings("unchecked")
     public <D extends ExtensionData<?>, P extends ExtensionParam> D run(AbstractExtensionNode<D, P> node, ExtensionParam param) {
         String fileName = node.getScriptFileName();
-        String cacheKey = param.getBizCode() + "_" + fileName;
+        String cacheKey = param.getBizCode() + "_" + param.getExtCode();
         if (StringUtils.isNotBlank(node.getScriptText())) {
             try {
                 if (instanceCache.get(cacheKey) != null) {
@@ -57,8 +57,13 @@ public class JavaExtensionNodeRunner implements IExtensionNodeRunner {
     }
 
     @Override
-    public boolean isSupport(String fileName, String fileContent) {
-        return fileName != null && fileName.endsWith(".java");
+    public boolean isSupport(String fileName, String scriptType) {
+        return "java".equals(scriptType) || (fileName != null && fileName.endsWith(".java"));
+    }
+
+    @Override
+    public void clearCache(String bizCode, String extCode) {
+        instanceCache.remove(bizCode + "_" + extCode);
     }
 
 }

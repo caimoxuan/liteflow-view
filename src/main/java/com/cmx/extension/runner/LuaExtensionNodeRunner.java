@@ -49,9 +49,12 @@ public class LuaExtensionNodeRunner implements IExtensionNodeRunner {
     }
 
     @Override
-    public boolean isSupport(String fileName, String fileContent) {
-        return fileName != null && fileName.endsWith(".lua");
+    public boolean isSupport(String fileName, String scriptType) {
+        return "lua".equals(scriptType) || (fileName != null && fileName.endsWith(".lua"));
     }
+
+    @Override
+    public void clearCache(String bizCode, String extCode) {}
 
 
     private Object getTargetValue(LuaValue value, Class<?> clazz) {

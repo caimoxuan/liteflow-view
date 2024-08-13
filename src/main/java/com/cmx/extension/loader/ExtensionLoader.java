@@ -8,10 +8,7 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ExtensionLoader {
 
@@ -34,10 +31,45 @@ public class ExtensionLoader {
      * 扩展点本地缓存
      */
     public static Map<String, Object> extensionNodeLocalCache = new HashMap<>();
+    /**
+     * 空节点缓存
+     */
+    public static Set<String> emptyNodeLocalCache = new HashSet<>();
 
+    /**
+     * 设置空节点
+     * @param loadKey key
+     * @param extCode code
+     */
+    public static void cacheEmptyNode(String loadKey, String extCode) {
+        emptyNodeLocalCache.add(loadKey + KEY_SPLIT + extCode);
+    }
+
+    /**
+     * 清除当前缓存（脚本更新可用）
+     * @param loadKey key
+     * @param extCode code
+     */
+    public static void clearCache(String loadKey, String extCode) {
+        emptyNodeLocalCache.remove(loadKey + KEY_SPLIT + extCode);
+        extensionNodeLocalCache.remove(loadKey + KEY_SPLIT + extCode);
+    }
+
+    /**
+     * 加载远程节点
+     * @param loadKey key
+     * @param extCode code
+     * @param clazz class
+     * @return node
+     * @param <T> node return type
+     */
     @SuppressWarnings("unchecked")
     public static <T> AbstractExtensionNode<ExtensionData<T>, ExtensionParam> loaderRemoteExtension(String loadKey, String extCode, Class<? extends AbstractExtensionNode<ExtensionData<T>, ExtensionParam>> clazz) {
         String extensionCode = loadKey + KEY_SPLIT + extCode;
+        // 判断空节点缓存
+        if (emptyNodeLocalCache.contains(extensionCode)) {
+            return null;
+        }
         AbstractExtensionNode<ExtensionData<T>, ExtensionParam> extensionNode = (AbstractExtensionNode<ExtensionData<T>, ExtensionParam>) extensionNodeLocalCache.get(extensionCode);
         if (extensionNode != null) {
             return extensionNode;
@@ -48,9 +80,21 @@ public class ExtensionLoader {
         return loaderNode;
     }
 
+    /**
+     * 加载本地节点
+     * @param loadKey key
+     * @param extCode code
+     * @param clazz class
+     * @return node
+     * @param <T> node return type
+     */
     @SuppressWarnings("unchecked")
     public static <T> AbstractExtensionNode<ExtensionData<T>, ExtensionParam> loaderLocalExtension(String loadKey, String extCode, Class<? extends AbstractExtensionNode<ExtensionData<T>, ExtensionParam>> clazz) {
         String extensionCode = loadKey + KEY_SPLIT + extCode;
+        // 空节点缓存判断
+        if (emptyNodeLocalCache.contains(extensionCode)) {
+            return null;
+        }
         AbstractExtensionNode<ExtensionData<T>, ExtensionParam> extensionNode = (AbstractExtensionNode<ExtensionData<T>, ExtensionParam>) extensionNodeLocalCache.get(extensionCode);
         if (extensionNode != null) {
             return extensionNode;
@@ -59,20 +103,20 @@ public class ExtensionLoader {
         if (url != null) {
             File file = new File(url.getFile());
             if (!file.isDirectory()) {
-                throw new RuntimeException("can not find local extension file directory");
+                return null;
             }
             String[] list = file.list();
             if (list == null || list.length == 0) {
-                throw new RuntimeException("can not find local extension file: " + extCode);
+                return null;
             }
             Optional<String> first = Arrays.stream(list).filter(s -> s.startsWith(extCode)).findFirst();
             if (!first.isPresent()) {
-                throw new RuntimeException("can not find local extension file: " + extCode);
+                return null;
             }
             String fileName = first.get();
             try(InputStream resource = ResourceLoader.class.getResourceAsStream(LOCAL_RESOURCE_DIR + loadKey + PATH_SPLIT + first.get())) {
                 if (resource == null) {
-                    throw new RuntimeException("can not find local extension file: " + fileName);
+                    return null;
                 }
                 String fileContext = getFileContent(resource);
                 if (StringUtils.isBlank(fileContext)) {
@@ -87,7 +131,7 @@ public class ExtensionLoader {
                 throw new RuntimeException(e);
             }
         } else {
-            throw new RuntimeException("can not find extension directory: " + loadKey);
+            return null;
         }
     }
 

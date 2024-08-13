@@ -13,7 +13,12 @@ public class ExtensionDetailVO {
     /**
      * 扩展点文本信息
      */
-    public String scriptText;
+    private String scriptText;
+
+    /**
+     * 脚本类型
+     */
+    private String scriptType;
 
     /**
      * 扩展点信息

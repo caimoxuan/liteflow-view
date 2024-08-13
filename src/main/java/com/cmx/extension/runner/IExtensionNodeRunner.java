@@ -1,7 +1,6 @@
 package com.cmx.extension.runner;
 
 
-import com.cmx.extension.Extensions;
 import com.cmx.extension.model.AbstractExtensionNode;
 import com.cmx.extension.model.ExtensionData;
 import com.cmx.extension.model.ExtensionParam;
@@ -21,9 +20,17 @@ public interface IExtensionNodeRunner {
     /**
      * 判断当前是否支持执行
      * @param fileName 文件名称
-     * @param fileContent 文件内容
+     * @param scriptType 脚本类型
      * @return true | false
      */
-    boolean isSupport(String fileName, String fileContent);
+    boolean isSupport(String fileName, String scriptType);
+
+
+    /**
+     * 清除缓存
+     * @param bizCode 业务code
+     * @param extCode 扩展点code
+     */
+    void clearCache(String bizCode, String extCode);
 
 }

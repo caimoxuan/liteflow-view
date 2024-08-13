@@ -3,6 +3,7 @@ package com.cmx.extension.loader;
 import com.cmx.extension.model.AbstractExtensionNode;
 import com.cmx.extension.model.ExtensionData;
 import com.cmx.extension.model.ExtensionParam;
+import com.cmx.model.ScriptDetail;
 
 public interface IExtensionRemoteLoader {
 
@@ -12,7 +13,25 @@ public interface IExtensionRemoteLoader {
      * @param extCode 扩展点编码
      * @return script
      */
-     String loadRemoteScript(String loadKey, String extCode);
+     ScriptDetail loadRemoteScript(String loadKey, String extCode);
+
+
+    /**
+     * 新增扩展点信息
+     * @param loadKey key
+     * @param extCode code
+     * @param scriptDetail script data
+     */
+     void saveRemoteScript(String loadKey, String extCode, ScriptDetail scriptDetail);
+
+
+    /**
+     * 修改扩展点
+     * @param loadKey key
+     * @param extCode code
+     * @param scriptDetail detail
+     */
+     void updateRemoteScript(String loadKey, String extCode, ScriptDetail scriptDetail);
 
     /**
      * 获取扩展点信息
