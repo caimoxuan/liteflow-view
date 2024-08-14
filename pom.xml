@@ -6,7 +6,7 @@
 
     <groupId>com.cmx</groupId>
     <artifactId>liteflow-view</artifactId>
-    <version>1.0.37</version>
+    <version>1.0.47</version>
     <name>liteflow-view</name>
 
     <properties>
@@ -64,6 +64,14 @@
             <artifactId>lombok</artifactId>
             <version>${project.lombok}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.8</version>
+            <scope>system</scope>
+            <systemPath>${java.home}/../lib/tools.jar</systemPath>
         </dependency>
 
     </dependencies>

@@ -56,6 +56,14 @@ public class LuaExtensionNodeRunner implements IExtensionNodeRunner {
     @Override
     public void clearCache(String bizCode, String extCode) {}
 
+    @Override
+    public void valid(String script) {
+        Globals luaGlobals = LuaGlobalRegister.getLuaGlobals();
+        LuaValue load = luaGlobals.load(script);
+        luaGlobals.set(PARAMETER_NAME, CoerceJavaToLua.coerce(new ExtensionParam()));
+        load.call();
+    }
+
 
     private Object getTargetValue(LuaValue value, Class<?> clazz) {
         if (value == null || value.isnil()) {

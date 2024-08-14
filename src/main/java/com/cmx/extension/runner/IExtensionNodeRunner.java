@@ -33,4 +33,11 @@ public interface IExtensionNodeRunner {
      */
     void clearCache(String bizCode, String extCode);
 
+
+    /**
+     * 校验脚本是否可执行
+     * @param script script
+     */
+    void valid(String script);
+
 }

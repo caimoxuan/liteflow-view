@@ -158,6 +158,7 @@ public class LiteFlowViewService {
         if (remoteLoader == null) {
             throw new RuntimeException("not implement method com.cmx.extension.loader.IExtensionRemoteLoader.saveRemoteScript!");
         }
+        Extensions.checkScriptValid(scriptDetail.getScriptText(), scriptDetail.getScriptType());
         remoteLoader.saveRemoteScript(bizCode, extCode, scriptDetail);
     }
 
@@ -171,11 +172,8 @@ public class LiteFlowViewService {
         if (remoteLoader == null) {
             throw new RuntimeException("not implement method com.cmx.extension.loader.IExtensionRemoteLoader.updateRemoteScript!");
         }
+        Extensions.checkScriptValid(scriptDetail.getScriptText(), scriptDetail.getScriptType());
         remoteLoader.updateRemoteScript(bizCode, extCode, scriptDetail);
-    }
-
-    public Boolean checkScript(String bizCode, String extCode, ScriptDetail scriptDetail) {
-        Extensions.clearExtensionCache(bizCode, extCode);
     }
 
     /**

@@ -10,6 +10,7 @@ import com.cmx.extension.runner.LuaExtensionNodeRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 扩展点外部操作类
@@ -34,6 +35,22 @@ public class Extensions {
     public static void clearExtensionCache(String bizCode, String extCode) {
         ExtensionLoader.clearCache(bizCode, extCode);
         runners.forEach(r -> r.clearCache(bizCode, extCode));
+    }
+
+
+    /**
+     * 校验脚本语法格式
+     * @param script script
+     * @param type type
+     */
+    public static void checkScriptValid(String script, String type) {
+        Optional<IExtensionNodeRunner> first = runners.stream()
+                .filter(r -> r.isSupport("*." + type, type))
+                .findFirst();
+        if (!first.isPresent()) {
+            throw new RuntimeException("script type " + type + " not support");
+        }
+        first.get().valid(script);
     }
 
 

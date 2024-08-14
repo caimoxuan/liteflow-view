@@ -20,4 +20,12 @@ public class ExtensionData<T> {
      */
     private T data;
 
+    public ExtensionData() {}
+
+    public ExtensionData(T data) {
+        this.data = data;
+        this.code = 0;
+        this.message = "success";
+    }
+
 }
