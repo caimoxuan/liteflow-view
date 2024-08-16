@@ -59,9 +59,12 @@ public class LuaGlobalRegister {
         }
     }
 
+    /**
+     * 打印日志
+     */
     static class LogFunc extends TwoArgFunction {
 
-        private Level levelType;
+        private final Level levelType;
 
         public LogFunc(Level level) {
             this.levelType = level;

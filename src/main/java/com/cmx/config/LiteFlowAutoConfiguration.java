@@ -13,10 +13,9 @@ import javax.annotation.PostConstruct;
 @ComponentScan(basePackages = {"com.cmx.web"})
 public class LiteFlowAutoConfiguration {
 
-
     @PostConstruct
     public void init() {
-        log.info("[LiteFlowAutoConfiguration] init start");
+        log.info("[LiteFlowAutoConfiguration] init");
     }
 
 }

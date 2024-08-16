@@ -6,7 +6,7 @@
 
     <groupId>com.cmx</groupId>
     <artifactId>liteflow-view</artifactId>
-    <version>1.0.47</version>
+    <version>1.0.64</version>
     <name>liteflow-view</name>
 
     <properties>
@@ -16,15 +16,16 @@
         <maven-resource-plugin.version>3.0.2</maven-resource-plugin.version>
         <project.lombok>1.18.24</project.lombok>
         <lite-flow.version>2.11.4</lite-flow.version>
+        <lite-ui.version>1.0.63</lite-ui.version>
     </properties>
 
     <dependencies>
 
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator-core</artifactId>
-            <version>0.46</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.cmx</groupId>-->
+<!--            <artifactId>liteflow-ui</artifactId>-->
+<!--            <version>${lite-ui.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>
