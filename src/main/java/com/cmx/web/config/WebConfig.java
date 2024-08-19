@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 //    @Override
 //    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/liteflow").addResourceLocations("classpath:/META-INF/resources/webjars/liteflow/index.html");
+//        registry.addResourceHandler("/liteflow").addResourceLocations("classpath:/META-INF/resources/webjars/liteflow/liteflow.html");
 //        registry.addResourceHandler("/liteflow/**").addResourceLocations("classpath:/META-INF/resources/webjars/liteflow/");
 //    }
 }

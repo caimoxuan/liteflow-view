@@ -2,10 +2,10 @@ package com.cmx.web;
 
 import com.cmx.model.vo.*;
 import com.cmx.web.service.LiteFlowViewService;
+import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
@@ -28,17 +28,17 @@ public class LiteFlow2ControllerWebMvc {
     }
 
     @GetMapping("/chainDetail")
-    public ChainDetailVO getChainDetail(@RequestParam String chainId) {
+    public ChainDetailVO getChainDetail(@RequestParam(name = "chainId") String chainId) {
         return liteFlowViewService.getChainJsonEL(chainId);
     }
 
     @GetMapping("/nodeDetail")
-    public NodeDetailVO getNodeDetail(@RequestParam String nodeId) {
+    public NodeDetailVO getNodeDetail(@RequestParam(name = "nodeId") String nodeId) {
         return liteFlowViewService.getNodeDetail(nodeId);
     }
 
     @GetMapping("/extensionDetail")
-    public ExtensionDetailVO getExtensionDetail(@RequestParam String bizCode, @RequestParam String extCode) {
+    public ExtensionDetailVO getExtensionDetail(@RequestParam(name = "bizCode") String bizCode, @RequestParam(name = "extCode") String extCode) {
         return liteFlowViewService.getExtensionDetail(bizCode, extCode);
     }
 
