@@ -6,7 +6,7 @@
 
     <groupId>com.cmx</groupId>
     <artifactId>liteflow-view</artifactId>
-    <version>1.0.64</version>
+    <version>1.0.67</version>
     <name>liteflow-view</name>
 
     <properties>
@@ -16,7 +16,7 @@
         <maven-resource-plugin.version>3.0.2</maven-resource-plugin.version>
         <project.lombok>1.18.24</project.lombok>
         <lite-flow.version>2.11.4</lite-flow.version>
-        <lite-ui.version>1.0.63</lite-ui.version>
+<!--        <lite-ui.version>1.0.66</lite-ui.version>-->
     </properties>
 
     <dependencies>
