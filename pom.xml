@@ -6,7 +6,7 @@
 
     <groupId>com.cmx</groupId>
     <artifactId>liteflow-view</artifactId>
-    <version>3.1.2.s3.01</version>
+    <version>2.11.4.s3.04</version>
     <name>liteflow-view</name>
 
     <properties>

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class BeanConfig {
+public class LiteflowBeanConfig {
 
     @Resource
     private ApplicationContext applicationContext;
