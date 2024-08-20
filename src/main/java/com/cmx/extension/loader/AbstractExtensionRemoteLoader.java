@@ -1,7 +1,6 @@
 package com.cmx.extension.loader;
 
 import com.cmx.extension.model.AbstractExtensionNode;
-import com.cmx.extension.model.DefaultExtensionNode;
 import com.cmx.extension.model.ExtensionData;
 import com.cmx.extension.model.ExtensionParam;
 import com.cmx.model.ScriptDetail;
@@ -15,10 +14,14 @@ public abstract class AbstractExtensionRemoteLoader implements IExtensionRemoteL
         if (scriptDetail == null) {
             return null;
         }
-        AbstractExtensionNode<ExtensionData<T>, ExtensionParam> extensionNode = new DefaultExtensionNode<>();
-        extensionNode.setScriptType(scriptDetail.getScriptType());
-        extensionNode.setScriptFileName(scriptDetail.getFileName());
-        extensionNode.setScriptType(scriptDetail.getScriptType());
-        return extensionNode;
+        try {
+            AbstractExtensionNode<ExtensionData<T>, ExtensionParam> extensionNode = clazz.getDeclaredConstructor().newInstance();
+            extensionNode.setScriptType(scriptDetail.getScriptType());
+            extensionNode.setScriptFileName(scriptDetail.getFileName());
+            extensionNode.setScriptText(scriptDetail.getScriptText());
+            return extensionNode;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
