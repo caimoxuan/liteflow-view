@@ -8,6 +8,7 @@ import com.cmx.extension.runner.IExtensionNodeRunner;
 import com.cmx.extension.runner.JavaExtensionNodeRunner;
 import com.cmx.extension.runner.LuaExtensionNodeRunner;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,8 @@ public class Extensions {
     /**
      * 所有
      */
-    private static final List<IExtensionNodeRunner> runners = new ArrayList<IExtensionNodeRunner>() {
+    private static final List<IExtensionNodeRunner> runners = new ArrayList<>() {
+        @Serial
         private static final long serialVersionUID = -3746006302505175571L;
         {
         add(new LuaExtensionNodeRunner());
@@ -47,7 +49,7 @@ public class Extensions {
         Optional<IExtensionNodeRunner> first = runners.stream()
                 .filter(r -> r.isSupport("*." + type, type))
                 .findFirst();
-        if (!first.isPresent()) {
+        if (first.isEmpty()) {
             throw new RuntimeException("script type " + type + " not support");
         }
         first.get().valid(script);

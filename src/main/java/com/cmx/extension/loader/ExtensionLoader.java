@@ -110,7 +110,7 @@ public class ExtensionLoader {
                 return null;
             }
             Optional<String> first = Arrays.stream(list).filter(s -> s.startsWith(extCode)).findFirst();
-            if (!first.isPresent()) {
+            if (first.isEmpty()) {
                 return null;
             }
             String fileName = first.get();

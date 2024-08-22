@@ -17,7 +17,7 @@ public class LiteFlowAutoConfiguration {
 
     @PostConstruct
     public void init() {
-        log.info("[LiteFlowAutoConfiguration] init");
+        log.info("[LiteFlowViewAutoConfiguration] init");
     }
 
 }

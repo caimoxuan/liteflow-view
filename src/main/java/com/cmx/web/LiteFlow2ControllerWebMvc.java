@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-//@Conditional({OnServletBasedWebApplication.class})
 @RequestMapping("/v1/liteflow/api/")
 public class LiteFlow2ControllerWebMvc {
 
@@ -44,17 +43,25 @@ public class LiteFlow2ControllerWebMvc {
 
     @PutMapping("/extensionScript")
     public String updateExtensionScript(@RequestBody ScriptDataVO scriptData) {
-        liteFlowViewService.updateExtensionScript(scriptData.getBizCode(),
-                scriptData.getExtCode(),
-                scriptData.getScriptDetail());
+        try {
+            liteFlowViewService.updateExtensionScript(scriptData.getBizCode(),
+                    scriptData.getExtCode(),
+                    scriptData.getScriptDetail());
+        } catch (Exception e) {
+            return e.getMessage();
+        }
         return "success";
     }
 
     @PostMapping("/extensionScript")
     public String createExtensionScript(@RequestBody ScriptDataVO scriptData) {
-        liteFlowViewService.createExtensionScript(scriptData.getBizCode(),
-                scriptData.getExtCode(),
-                scriptData.getScriptDetail());
+        try {
+            liteFlowViewService.createExtensionScript(scriptData.getBizCode(),
+                    scriptData.getExtCode(),
+                    scriptData.getScriptDetail());
+        } catch (Exception e) {
+            return e.getMessage();
+        }
         return "success";
     }
 

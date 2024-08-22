@@ -15,6 +15,7 @@ public class LiteflowBeanConfig {
 
     @PostConstruct
     public void initFactory() {
+        // 配置信息客房此处加载
         ExtensionLoaderFactory.setApplicationContext(applicationContext);
     }
 

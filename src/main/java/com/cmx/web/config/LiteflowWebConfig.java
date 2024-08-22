@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class LiflowWebConfig implements WebMvcConfigurer {
+public class LiteflowWebConfig implements WebMvcConfigurer {
 
 
 //    @Override

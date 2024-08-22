@@ -49,7 +49,7 @@ public class JavaExtensionNodeRunner implements IExtensionNodeRunner {
                 String localPath = System.getProperty("user.dir");
                 File javaFile = new File(localPath + "/" + fileName);
                 Class<?> dynamicClass = compileToInstance(javaFile, node.getScriptText(), className);
-               // Create an instance and invoke a method
+                // Create an instance and invoke a method
                 Object instance = dynamicClass.getDeclaredConstructor().newInstance();
                 instanceCache.put(cacheKey, instance);
                 return (D) dynamicClass.getMethod(DEFAULT_METHOD, ExtensionParam.class).invoke(instance, param);
@@ -96,6 +96,7 @@ public class JavaExtensionNodeRunner implements IExtensionNodeRunner {
 
     /**
      * 从脚本中获取类名称
+     *
      * @param javaSourceCode java code
      * @return className
      */
@@ -113,8 +114,9 @@ public class JavaExtensionNodeRunner implements IExtensionNodeRunner {
 
     /**
      * 将代码文编编译并加载
-     * @param javaFile file
-     * @param script code
+     *
+     * @param javaFile  file
+     * @param script    code
      * @param className class
      * @return obj
      * @throws Exception e
@@ -127,7 +129,7 @@ public class JavaExtensionNodeRunner implements IExtensionNodeRunner {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         int compileResult = compiler.run(null, null, null, javaFile.getPath());
         if (compileResult != 0) {
-            throw  new RuntimeException("file compile fail");
+            throw new RuntimeException("file compile fail");
         }
         // 加载并执行.class文件中的代码
         URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new File(".").toURI().toURL()});
